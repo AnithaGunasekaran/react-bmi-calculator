@@ -6,13 +6,11 @@ class App extends Component {
   constructor(props) {
      super(props);
      this.state = { name: 'Guest', weight: 90, height: 180, bmi: 27, message: '', optimalweight: '', time: new Date().toLocaleTimeString() };
-    
      this.submitMe = this.submitMe.bind(this);
      this.heightchange = this.heightchange.bind(this);
      this.weightchange = this.weightchange.bind(this);
      this.change = this.change.bind(this);  
-     this.ticker = this.ticker.bind(this);  
-    
+     this.ticker = this.ticker.bind(this); 
   }
 
 
@@ -53,23 +51,18 @@ class App extends Component {
 
   ticker() {
     this.setState({time: new Date().toLocaleTimeString()})
-    
   }
  
   componentDidMount(){
     setInterval(this.ticker, 60000);
   }
 
- 
   change(e){
     e.preventDefault();
     console.log(e.target);
     this.setState({name: e.target.value});
   }
-
- 
-
-
+  
   render() {
     return (
       <div className="App">
