@@ -11,6 +11,8 @@ class App extends Component {
      this.weightchange = this.weightchange.bind(this);
      this.change = this.change.bind(this);  
      this.ticker = this.ticker.bind(this); 
+     this.blur = this.blur.bind(this); 
+     this.calculateBMI = this.calculateBMI.bind(this); 
   }
 
 
@@ -19,34 +21,42 @@ class App extends Component {
     e.preventDefault();
   }
 
+  blur(e){
+   this.calculateBMI();
+  }
    weightchange(e){
     this.setState({weight: e.target.value});
-
     e.preventDefault();
+  }
+
+  calculateBMI(){
+
+      var heightSquared = (this.state.height/100  * this.state.height/100);
+      var bmi = this.state.weight / heightSquared;
+      var low = Math.round(18.5 * heightSquared);                                                         
+      var high = Math.round(24.99 * heightSquared);    
+      var message = "";
+      if( bmi >= 18.5  && bmi <= 24.99 ){
+          message = "You are in a healthy weight range";
+      }
+      else if(bmi >= 25 && bmi <= 29.9){
+        message = "You are overweight";
+      }
+      else if(bmi >= 30){
+          message ="You are obese";
+      }
+      else if(bmi < 18.5){
+        message = "You are under weight";
+      }
+      this.setState({message: message});  
+      this.setState({optimalweight: "Your suggested weight range is between "+low+ " - "+high});    
+      this.setState({bmi: Math.round(bmi * 100) / 100});   
+
   }
 
   submitMe(e) {
      e.preventDefault();
-     var heightSquared = (this.state.height/100  * this.state.height/100);
-     var bmi = this.state.weight / heightSquared;
-     var low = Math.round(18.5 * heightSquared);                                                         
-     var high = Math.round(24.99 * heightSquared);    
-     var message = "";
-     if( bmi >= 18.5  && bmi <= 24.99 ){
-        message = "You are in a healthy weight range";
-     }
-     else if(bmi >= 25 && bmi <= 29.9){
-       message = "You are overweight";
-     }
-     else if(bmi >= 30){
-        message ="You are obese";
-     }
-     else if(bmi < 18.5){
-       message = "You are under weight";
-     }
-     this.setState({message: message});  
-     this.setState({optimalweight: "Your suggested weight range is between "+low+ " - "+high});    
-     this.setState({bmi: Math.round(bmi * 100) / 100});   
+     this.calculateBMI();
   }
 
   ticker() {
@@ -62,7 +72,7 @@ class App extends Component {
     console.log(e.target);
     this.setState({name: e.target.value});
   }
-  
+
   render() {
     return (
       <div className="App">
@@ -73,11 +83,11 @@ class App extends Component {
             <label>
               Please enter your name
             </label>
-            <input type="text" name="name" value={this.state.name} onChange={this.change}   />
+            <input type="text" name="name" value={this.state.name} onBlur={this.blur} onChange={this.change}   />
              <label>
              Enter your height in cm: 
             </label>
-            <input type="text" name="height" value={this.state.height} onChange={this.heightchange}   />
+            <input type="text" name="height" value={this.state.height} onBlur={this.blur} onChange={this.heightchange}   />
              <label>
              Enter your weight in kg : 
             </label>
