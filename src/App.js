@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { Button, TextField } from '@mui/material';
 
 class App extends Component {
 
@@ -80,23 +81,17 @@ class App extends Component {
           <h2>BMI Calculator</h2>
         </div>
           <form onSubmit={this.submitMe}>
-            <label>
-              Please enter your name
-            </label>
-            <input type="text" name="name" value={this.state.name} onBlur={this.blur} onChange={this.change}   />
-             <label>
-             Enter your height in cm: 
-            </label>
-            <input type="text" name="height" value={this.state.height} onBlur={this.blur} onChange={this.heightchange}   />
-             <label>
-             Enter your weight in kg : 
-            </label>
-            <input type="text" name="weight" value={this.state.weight} onChange={this.weightchange}    />
+            <TextField id="outlined-basic" multiline label="Please enter your name:" value={this.state.name} onBlur={this.blur} onChange={this.change}   />
+            <TextField id="outlined-basic" multiline label="Enter your height in cm:" value={this.state.height} onBlur={this.blur} onChange={this.heightchange}   />
+            <TextField id="outlined-basic" multiline label="Enter your weight in kg:" value={this.state.weight} onChange={this.weightchange}    />
             <label>{this.state.checked} Hello {this.state.name}, How are you my friend? It's currently  {this.state.time} where you are living. Your BMI is {this.state.bmi} </label>
               <label>{this.state.message}</label>
               <label>{this.state.optimalweight}</label>
-             
-            <input type="submit" value="Submit"/>
+            
+            <div>
+            <Button variant="contained">Submit</Button>
+            </div>
+            
           </form>
       
       </div>
